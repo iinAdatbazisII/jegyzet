@@ -88,3 +88,30 @@ id | rendeles ID | datum      | vevo id | vevo cim | vevo nev  | termekek
 
 2. normal forma
 kulon tablaba rendeles adatai, vevo adatai, termekek adatai
+
+3. normal forma
+tranzitiv fuggosegek megszuntetese
+A -> B a fugg btol
+B -> C
+(A -> C IS!)
+
+sql felhasznalokezeles
+grant all previliges on `dora\_%`.* to 'dora'@'%' identified by 'boglarka';
+
+
+INSERT INTO 'kategoriak'('id' , 'nev') VALUES
+(10, 'Metéltek'),
+(11, 'Csuszák'),
+(12, 'Lasagne'),
+(13, 'Makaróni'),
+(14, 'Spagetti'),
+(15, 'Durum'),
+(16, 'Zöldséges tészták');
+
+
+mysql 
+
+xampp config vagy cd C:/xampp/mysql/bin
+mysql -u dora -h 172.16.16.148 -p       boglarka
+
+show databases
