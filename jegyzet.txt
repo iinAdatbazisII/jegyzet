@@ -1,0 +1,90 @@
+triggerek, tarolt eljarasok
+1 dolgozat tarolt eljarasok, beadando adatbazis tervezes
+normal formak
+
+egyed, entitas = adatok
+rekord = 1 sor (nem egyforma tipusu adatok)
+mezo = rekord oszlopai
+
+rekord torlodik + ujat veszunk fel = a vegere szujra be
+DELETE FROM table       adattabla torles
+
+Első normál forma
+Ha minden attribútumnak csak egy értéke van, és van elsődleges kulcsmező. 
+( magyarul minden rekordnak kell, hogy legyed egyedi azonosító (ID) -> egyértelműen azonosítható )
+
+Második normálforma
+Ha már első normál formán van, és minden nem azonosító attribútum funkcionálisan függő viszonyban van az azonosító attribútummal.
+(adat csak az IDjatol fugg, tobbi mezotol nem)
+
+A nem azonosító attribútumok tehát alá vannak rendelve az azonosító attribútumnak.
+
+Harmadik normálforma
+Ha már második normálformában van, és a nem azonosító attribútumok tranzitíven nem függnek más nem azonosító attribútumtól.
+
+Másként: Minden nem azonosító attribútum nincs teljesen alárendelve más nem azonosító attribútumnak.
+
+=       egyenlő
+<>      nem egyenlő
+> <     nagyobb / kisebb
+>= <=   nagyobb-egyenlő / kisebb-egyenlő
+AND     és
+OR      vagy
+NOT     nem
+BETWEEN két érték között
+IN      felsorolt értékek egyike
+LIKE    mintára illeszkedik
+IS NULL üres/NULL
+
+rekord muveletei
+SELECT	lekérdezés
+INSERT	új rekord
+UPDATE	rekord módosítása
+DELETE	rekord törlése
+WHERE	rekordok szűrése
+ORDER BY	rendezés
+DISTINCT	duplikációk kiszűrése
+GROUP BY	csoportosítás
+HAVING	csoportok szűrése
+
+where
+A WHERE az egyes rekordokat/sorokat szűri, még a csoportosítás előtt.
+
+SELECT *
+FROM dolgozok
+WHERE fizetes > 500000;
+
+having
+A HAVING főleg GROUP BY után, az elkészített csoportokat szűri.
+
+SELECT varos, COUNT(*) AS letszam
+FROM dolgozok
+GROUP BY varos
+HAVING COUNT(*) > 10;
+
+FROM
+  ↓
+WHERE       ← sorok szűrése
+  ↓
+GROUP BY    ← csoportosítás
+  ↓
+HAVING      ← csoportok szűrése
+  ↓
+SELECT
+  ↓
+ORDER BY
+
+
+rendeles ID | datum      | vevo id | vevo cim | vevo nev  | termekek
+100         | 2026-09.01 | 1       | Kis u 2  | Nagy Béla | Egér, billentyuzet
+101         | 2026-09-01 | 2       | Nagy u 2 | Kis Janos | Monitor
+
+
+1. normal forma
+id | rendeles ID | datum      | vevo id | vevo cim | vevo nev  | termekek
+1  |100          | 2026-09-01 | 1       | Kis u 2  | Nagy Béla | Egér
+1  |100          | 2026-09-01 | 1       | Kis u 2  | Nagy Béla | billentyuzet
+2  |101          | 2026-09-01 | 2       | Nagy u 2 | Kis Janos | Monitor
+
+2. normal forma
+kulon tablaba rendeles adatai, vevo adatai, termekek adatai
