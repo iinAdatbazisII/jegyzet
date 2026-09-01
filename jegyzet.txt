@@ -114,4 +114,12 @@ mysql
 xampp config vagy cd C:/xampp/mysql/bin
 mysql -u dora -h 172.16.16.148 -p       boglarka
 
-show databases
+show databases;
+
+kaszkadolt torles
+
+char(10) 1 karakternel is 10 karaktert foglal le
+varchar(10) 1 karakternyi helyet foglal
+
+
+idegenkulcsos a tobbes oldal
