@@ -123,3 +123,42 @@ varchar(10) 1 karakternyi helyet foglal
 
 
 idegenkulcsos a tobbes oldal
+
+a tabla amit letrehozok, ha kapcsolodik valamihez amr leteznie kell
+
+if
+else
+elseif
+endsif
+
+triggerek
+automatikusan futnak
+	before
+	after
+
+
+DELIMITER ##
+
+CREATE TRIGGER after_student_result_update
+AFTER UPDATE ON students
+--minden érintett sort nézzen meg:
+FOR EACH ROW
+BEGIN
+--OLD és NEW egész rekordot nyilvántart, lekérhető más mező is
+    IF OLD.result <> NEW.result THEN
+        INSERT INTO student_result_changes_log(name, old_result, new_result) VALUES
+        (OLD.name, OLD.result, NEW.result);
+    END IF;
+END ##
+DELIMITER ;
+
+timestamp now()
+datetime default=current_timestamp
+
+show triggers;
+
+result INTEGER NOT NULL CHECK (result BETWEEN 1 AND 100)
+
+triggerek nevenek lekerdezese
+SELECT trigger_name 
+FROM information_schema.triggers
