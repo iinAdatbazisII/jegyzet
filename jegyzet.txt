@@ -162,3 +162,9 @@ result INTEGER NOT NULL CHECK (result BETWEEN 1 AND 100)
 triggerek nevenek lekerdezese
 SELECT trigger_name 
 FROM information_schema.triggers
+
+tarolt eljarasok
+rejtve van 
+sql injectontol megved
+
+@phone nem helyi valtozo ( in / output)
