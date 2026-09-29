@@ -164,3 +164,17 @@ begin
 end ##
 
 delimiter ;
+
+
+delimiter ##
+create or replace procedure password_change_count()
+begin
+
+    repeat
+        select count(id) as jelszovaltoztatas
+        where esemeny_tipus = 'jelszo_valtoztatas'
+        from naplo_esemenyek;
+    until
+
+
+delimiter ;
