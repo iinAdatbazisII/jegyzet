@@ -163,7 +163,6 @@ delimiter ;
 
 
 delimiter ##
-
 create procedure get_student_level2(
     in student_id int,
     out student_result varchar(20)
@@ -181,7 +180,6 @@ begin
         set student_result = 'kituno';
     end if;
 end##
-
 delimiter ;
 
 call get_student_level2(3, @student_result);
@@ -195,4 +193,131 @@ begin
     where result < 50;
 
 end##
+delimiter ;
+
+
+
+pontok atlaga
+
+delimiter ##
+
+create procedure result_avg
+    (out sResult decimal,
+    out resultText varchar(20))
+begin
+    select avg(result) into sResult
+    from students;
+    if sResult < 50 then 
+        set resultText = 'bukott';
+    elseif sResult between 50 and 80 then 
+        set resultText = 'atlagos';
+    else 
+        set resultText = 'kituno';
+    end if;
+
+end ##
+    
+delimiter ;
+
+call result_avg(@sResult, @resultText);
+select @sResult as result, @resultText as resultText;
+
+
+delimiter ##
+create procedure get_result(
+    out text varchar(20)
+)
+begin
+    INSERT INTO student_result_varchar(name, result, @text) VALUES
+        (OLD.name, OLD.result, @text);
+end##
+delimiter ;
+
+
+
+
+delimiter ##
+create procedure student_status(
+    out sStatus varchar(20)
+)
+begin
+    declare avgScore double default 0;
+    select avg(result) into avgScore from students;
+    
+    case 
+    when avgScore < 50 then
+    set sStatus = "rossz";
+
+    when avgScore between 50 and 80 then
+    set sStatus = "kozepes";
+
+    when avgScore > 80 then
+    set sStatus = "kivalo";
+
+    end case;
+
+end ##
+delimiter ;
+
+call student_status(@status);
+select @status;
+
+delimiter ##
+create procedure allStudentStatus()
+begin
+    select name, result, case
+    when result < 50 then "rossz"
+    when result between 50 and 80 then "atlagos"
+    when result > 80 then "kivalo"
+    else "nincs ilyen. -.-"
+    end as sStatus
+    from students;
+end ##
+delimiter ;
+
+-- ket alulvonas vagy mi a bubanat
+
+call allStudentStatus();
+
+
+-- while feltétel do utasítas
+
+delimiter ##
+
+create procedure while_loop1()
+begin
+    declare x int;
+    declare sValue char(10);
+    set x = 1;
+    set sValue = "";
+
+    while x<=5 do
+    set sValue = concat(sValue, x, ", ");
+    set x = x + 1;
+    end while;
+
+    select sValue;
+
+end ##
+delimiter ;
+
+
+--repeat utasítasok until feltétel end repeat
+
+delimiter ##
+
+create or replace procedure do_while_loop()
+begin
+    declare x int default 1;
+    declare sValue varchar(50) default "";
+
+    repeat 
+    set sValue = concat(sValue, x, ", ");
+    set x = x + 1;
+    until x > 10
+    end repeat;
+
+    select sValue;
+
+end ##
 delimiter ;

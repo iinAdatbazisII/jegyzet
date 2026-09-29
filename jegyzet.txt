@@ -168,3 +168,10 @@ rejtve van
 sql injectontol megved
 
 @phone nem helyi valtozo ( in / output)
+
+SELECT CURRENT_TIMESTAMP, DATEADD(month, 1, CURRENT_TIMESTAMP) as dateadd
+
+SELECT customer_id, SUM(amount) AS total
+FROM Orders
+GROUP BY customer_id
+HAVING SUM(amount) < 500;

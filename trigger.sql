@@ -127,18 +127,40 @@ BEGIN
     DECLARE numsForm VARCHAR(20);
 
     IF NEW.phone IS NOT NULL AND NEW PHONE <> "" THEN
-        SET NEW.phone = REGEXP_REPLACE(NEW.phone, '[^0-9]', '');
-    IF NEW.phone LIKE '06%' THEN
-        SET NEW.phone = CONCATE(
-        ('+36',SUBSTRING( NEW.phone, 3)),
-        )
-    IF NEW.phone LIKE '36%' THEN
-    IF NEW.phone LIKE '361%' AND THEN
+        SET numsForm = REGEXP_REPLACE(NEW.phone, '[^0-9]', '');
+    IF numsForm LIKE '06%' OR 
+    numsForm LIKE '36' THEN
+        SET numsForm = CONCAT(
+        ('+36',SUBSTRING( NEW.phone, 3)));
+
 
     
     IF LENGTH(NEW.phone) = 11 AND NEW.phone LIKE '+36%' THEN
     SET nums_formatted = CONCAT(
         SUBSTRING(NEW.phone, 1, 3, ' ')
     )
+
+
 END ##
 DELIMITER ;
+
+
+
+delimiter ##
+
+create or replace procedure delete_old_logs()
+begin
+    declare deleted_rows int default 0;
+
+    repeat
+        delete from naplo_esemenyek
+        where letrehozva < now() - interval 30 day
+        limit 100;
+        
+        set deleted_rows = ROW_COUNT();
+    until deleted_rows = 0
+    end repeat;
+
+end ##
+
+delimiter ;
